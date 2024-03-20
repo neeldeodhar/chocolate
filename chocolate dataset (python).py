@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[6]:
+# In[1]:
 
 
 #downloading dataset, importing libraries
@@ -26,7 +26,12 @@ from sklearn.preprocessing import OrdinalEncoder
 
 
 
-# In[7]:
+
+
+
+
+
+# In[2]:
 
 
 #reading the dataset, deleting missing value entries
@@ -41,16 +46,19 @@ df.head()
 df.dropna()
 
 
-# In[14]:
+# In[3]:
 
 
 #calculating how many tuples in dataset,
 #calculating how many unique names in dataset
 #how many reviews are made in 2013 in the dataset.
 #calculating how many missing values in the BeanType Column.
+df = pd.read_csv('flavors_of_cacao.csv')
 
+df.columns = ['Company', 'SpecificBean', 'Ref', 'ReviewDate','CocoaPercent', 'CompanyLocation','Rating',
+                  'BeanType','BeanOrigin']
 
-print (df.shape)
+print (df.shape[0]) # to count tuples
 
 
 data = pd.DataFrame()
@@ -64,31 +72,47 @@ print (df['Company'].nunique())
 
 print  (df['ReviewDate'].value_counts()[2013])
 
-print (df['BeanType'].isnull().sum())
+df['BeanType'].value_counts()['\xa0']
 
 
-# In[9]:
+
+# In[ ]:
+
+
+
+
+
+# In[4]:
 
 
 #plotting histogram
 
-plt.hist(x='Rating')
+plt.hist(data = df, x='Rating')
+plt.xlabel('Rating')
+plt.ylabel('Chocolate Dataset')
+plt.show()
+print ("majority of the chocolate bars have been rated in the range 3.0-4.0; with 3.5 being most common rating")
 
-
-# In[10]:
-
-
-#plotting converted numerical Cocoa Percent Values against Rating Values
-#scatter plot
 x = df['Rating'].values
 df['CocoaPercent']= df['CocoaPercent'].str.rstrip('%').astype('float')/100.0
 y = df['CocoaPercent']
 
+
+
+# In[5]:
+
+
+#plotting converted numerical Cocoa Percent Values against Rating Values
+#scatter plot
 plt.scatter(x,y)
+plt.xlabel("Rating")
+plt.ylabel("Cocoa Percentage")
 plt.show()
+print ("when cocoa percent is in the range 60-70%; the chocolate bars get the most rating")
 
 
-# In[11]:
+
+# In[6]:
 
 
 #normalize the Rating Column and printing results.
@@ -101,7 +125,7 @@ df['Rating'] = Scaler.fit_transform(df[['Rating']])
 display(df)
 
 
-# In[13]:
+# In[7]:
 
 
 #encoding two categorical columns with ordinal encoder
